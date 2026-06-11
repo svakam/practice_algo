@@ -1,15 +1,12 @@
-#%% imports
-from data.utils import data_fetcher, ML # enum
+#%% Imports
+from data.utils import data_fetcher
+print("Imported")
 
 #%% Fetch UCI data
 
-[features, targets] = data_fetcher.get_data(ML.UCI_MAMMO)
-print(features.head)
-print(targets.head)
+[features, targets] = data_fetcher.get_data(data_fetcher.ML.UCI_MAMMO)
 
 # set up tree
-
-# import UCI mammogramic dataset
 
 # prepare data
 # conv question marks to NaN
@@ -19,3 +16,5 @@ print(targets.head)
 # # applies similarity rules
 # # preprocessing.StandardScaler()
 # create a single train/test split via sklearn.model_selection.train_test_split(all_features_scaled, all_classes, test_size=<proportion/1 to test on>, random_state=1)
+
+# %%

@@ -6,9 +6,20 @@ I was hoping to include CMake to help with GoogleTest integration, but I'd rathe
 
 Python only: Can import from external datasets to test against ML algorithms via `import data.utils.data_fetcher`. Data typically returned as a list of `[features, targets]`.
 
-## Leetcode
+## Setup
+Once cloned, run `pip install -e .` to set up packages/module references. 
 
-## Other
-### Linear Algebra
+## Data
+### ML Datasets
+- UC Irvine (+ data fetchers)
+
+## Libraries
+### Leetcode
+
+### Other
+#### Linear Algebra
 - Determinant
 - Moving Average
+
+#### Machine Learning
+- Decision Tree
