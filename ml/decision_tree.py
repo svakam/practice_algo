@@ -25,7 +25,7 @@ combined.describe()
 features = combined[['Age', 'Shape', 'Margin', 'Density']]
 print(features.describe())
 
-targets = combined[['Severity']]
+targets = combined['Severity']
 print(targets.describe())
 print(targets.head())
 
@@ -99,4 +99,3 @@ for i in range(1, 11):
 
 print(f"optimal max_depth: {best_max_depth} with 5-fold cross-val score {best_score}")
 
-#%%
