@@ -7,3 +7,6 @@ class ML(Enum):
 def get_data(d: ML):
     match d:
         case d.UCI_MAMMO: return uci.get_mammo()
+    return None
+
+# potential to overload with other dataset types
