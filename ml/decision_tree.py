@@ -29,7 +29,7 @@ targets = combined[['Severity']]
 print(targets.describe())
 print(targets.head())
 
-#%% Normalize via standard-normal
+#%% Normalize features via standard-normal
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.tree import DecisionTreeClassifier
@@ -66,7 +66,8 @@ tree.export_graphviz(clf, out_file=dot_data, feature_names=feature_names)
 graph = graph_from_dot_data(dot_data.getvalue())
 Image(graph.create_png())
 
-#%% run classifier again on k-fold cross val and run hyperparameter experimentation
+#%% Run classifier again on k-fold cross val with hyperparameter experimentation
+print("\nTuning hyperparameters with k = 5 fold cross validation...")
 from sklearn.model_selection import cross_val_score
 
 clf = DecisionTreeClassifier(random_state=10, max_depth=3, criterion='entropy')
@@ -75,25 +76,27 @@ cv_scores = cross_val_score(clf, features_np, targets_np, cv=5)
 print(f"5-fold cross validation scores: {cv_scores}")
 print(f"Average: {cv_scores.mean()}")
 
-print("\nTuning hyperparameters with k = 5 fold cross validation...")
+best_max_depth = 1
+best_score = 0.0
 
-best_max = 1
-curr_depth = 1
 
 for i in range(1, 11):
     print(f"max depth: {i}")
     clf = DecisionTreeClassifier(random_state=10, max_depth=i, criterion='entropy')
 
     cv_scores = cross_val_score(clf, features_np, targets_np, cv=5)
-    print(f"5-fold cross validation scores: {cv_scores}")
+    # print(f"5-fold cross validation scores: {cv_scores}")
     mean = cv_scores.mean()
-    print(f"Average: {mean}")
-    curr_depth = mean
+    print(f"Averages score: {mean}")
+    curr_depth = i
+    curr_score = mean
 
-    curr_depth = max(best_max, curr_depth)
+    if curr_score > best_score:
+        best_score = curr_score
+        best_max_depth = curr_depth
 
     print("\n")
 
-print(f"optimal max_depth: {best_max}")
+print(f"optimal max_depth: {best_max_depth} with 5-fold cross-val score {best_score}")
 
 #%%
