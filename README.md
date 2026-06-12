@@ -4,14 +4,24 @@ A simple, bear-bones repo for algo practice and testing. Problems and helper str
 
 I was hoping to include CMake to help with GoogleTest integration, but I'd rather avoid that hassle for the sake of focusing on coding. 
 
-Python only: Can import from external datasets to test against ML algorithms via `import data.utils.data_fetcher`. Data typically returned as a list of `[features, targets]`.
+Python only: Can import from external datasets to test against ML algorithms via `import data.utils.data_fetcher`. 
 
 ## Setup
 Once cloned, run `pip install -e .` to set up packages/module references. 
 
 ## Data
-### ML Datasets
-- UC Irvine (+ data fetchers)
+### ML Dataset Sources
+- UC Irvine
+- Kaggle
+
+Note: APIs are abstracted into method calls via a 'data fetcher' layer.
+
+```
+from data.utils import data_fetcher
+import pandas as pd
+import numpy as np
+print("Imported")
+```
 
 ## Libraries
 ### Leetcode
@@ -23,3 +33,5 @@ Once cloned, run `pip install -e .` to set up packages/module references.
 
 #### Machine Learning
 - Decision Tree
+- K-nearest Neighbors
+- Random Forest
