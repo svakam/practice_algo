@@ -15,7 +15,7 @@ print(combined.describe())
 print(combined.head())
 
 #%% Prepare data
-# conv question marks to NaN
+# conv '?' to NaN
 # drop missing vals
 combined.replace('?', np.nan)
 combined.dropna(inplace=True)
@@ -53,14 +53,47 @@ features_scaled
 clf = DecisionTreeClassifier(random_state=1, max_depth=3, criterion='entropy')
 clf.fit(training_inputs, training_targets)
 
-#%% Visualize and score
+# visualize and score
 from IPython.display import Image
 from six import StringIO
 from sklearn import tree
 from pydotplus import graph_from_dot_data
 
+clf.score(testing_inputs, testing_targets)
+
 dot_data = StringIO()
 tree.export_graphviz(clf, out_file=dot_data, feature_names=feature_names)
 graph = graph_from_dot_data(dot_data.getvalue())
 Image(graph.create_png())
-# %%
+
+#%% run classifier again on k-fold cross val and run hyperparameter experimentation
+from sklearn.model_selection import cross_val_score
+
+clf = DecisionTreeClassifier(random_state=10, max_depth=3, criterion='entropy')
+
+cv_scores = cross_val_score(clf, features_np, targets_np, cv=5)
+print(f"5-fold cross validation scores: {cv_scores}")
+print(f"Average: {cv_scores.mean()}")
+
+print("\nTuning hyperparameters with k = 5 fold cross validation...")
+
+best_max = 1
+curr_depth = 1
+
+for i in range(1, 11):
+    print(f"max depth: {i}")
+    clf = DecisionTreeClassifier(random_state=10, max_depth=i, criterion='entropy')
+
+    cv_scores = cross_val_score(clf, features_np, targets_np, cv=5)
+    print(f"5-fold cross validation scores: {cv_scores}")
+    mean = cv_scores.mean()
+    print(f"Average: {mean}")
+    curr_depth = mean
+
+    curr_depth = max(best_max, curr_depth)
+
+    print("\n")
+
+print(f"optimal max_depth: {best_max}")
+
+#%%
