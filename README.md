@@ -12,7 +12,7 @@ Once cloned, run `pip install -e .` to set up packages/module references.
 ## Data
 ### ML Dataset Sources
 - UC Irvine
-- Kaggle
+- Kaggle (MUST be authenticated. See `https://www.kaggle.com/settings/api`)
 
 Note: APIs are abstracted into method calls via a 'data fetcher' layer.
 
@@ -34,4 +34,4 @@ print("Imported")
 #### Machine Learning
 - Decision Tree
 - K-nearest Neighbors
-- Random Forest
+- Random Forest, Confusion Matrix + Accuracy
