@@ -31,7 +31,7 @@ targets_np = targets.values
 features_scaled = StandardScaler().fit_transform(features_np)
 features_scaled
 
-#%% Run k-neighbors and tune hyperparameters
+#%% Run k-neighbors and tune hyperparameters iteratively
 print("Running 10-fold cross validation on k-neighbors and tuning hyperparameters...")
 from sklearn import neighbors
 from sklearn.model_selection import cross_val_score

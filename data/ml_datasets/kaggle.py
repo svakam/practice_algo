@@ -28,3 +28,4 @@ def get_ai_impact():
         "ai_student_impact_dataset (1).csv",
     )
     return df
+

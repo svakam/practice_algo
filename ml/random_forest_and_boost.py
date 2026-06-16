@@ -6,7 +6,6 @@ print("Imported")
 
 #%% Fetch data
 df = data_fetcher.get_data(data_fetcher.ML.KAGGLE_AI_IMPACT)
-df
 
 #%% Inspect
 
@@ -47,7 +46,7 @@ features = df[['Pre_Semester_GPA', 'Weekly_GenAI_Hours', 'Perceived_AI_Dependenc
                'Anxiety_Level_During_Exams', 'Paid_Subscription', 'Prompt_Engineering_Skill']]
 
 print(len(features) == len(targets))
-# %% Normalization
+#%% Normalization
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 
 # convert categorical to numerical
@@ -92,11 +91,40 @@ clf.fit(training_inputs, training_targets)
 # run the classifier on test inputs and output predicted targets
 predicted_targets = clf.predict(testing_inputs)
 
-# use confusion matrix and accuracy score to compare testing targets to predicted
+# confusion matrix and accuracy score to compare testing targets to predicted
 cm = confusion_matrix(testing_targets, predicted_targets)
 print(cm)
 
-acc = accuracy_score(testing_targets, predicted_targets)
-print(acc)
+score = accuracy_score(testing_targets, predicted_targets)
+print(score)
 
+acc_threshold = 0.8
 
+#%% If accuracy score below threshold, try boosting and XGBoosting
+from sklearn.ensemble import GradientBoostingClassifier
+import xgboost as xgb
+import matplotlib.pyplot as plt
+if (score < acc_threshold):
+    GBC = GradientBoostingClassifier()
+    GBC.fit(training_inputs, training_targets)
+    y_pred = GBC.predict(testing_inputs)
+    boosted_score = GBC.score(testing_inputs, testing_targets)
+    print(boosted_score)
+
+    print(f"Score gradient-boosted by {(boosted_score - score):.5f}")
+
+    if (boosted_score < acc_threshold):
+        XGBC = xgb.XGBClassifier()
+        XGBC.fit(training_inputs, training_targets)
+        xgb_pred = XGBC.predict(testing_inputs)
+        xgb_score = XGBC.score(testing_inputs, testing_targets)
+        print(xgb_score)
+
+        print(f"Score XG-boosted by {(xgb_score - score):.5f}")
+        print(f"XG-Boost improves upon gradient boosting by {(xgb_score - boosted_score):.5f}")
+
+        xgb.plot_importance(XGBC) # how do I label these cols
+        plt.rcParams['figure.figsize'] = [5,5]
+        plt.show()
+
+#%%
