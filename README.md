@@ -35,4 +35,5 @@ print("Imported")
 - Decision Tree
 - K-nearest Neighbors
 - Random Forest, Confusion Matrix + Accuracy
-- SVM
+- SVM, Gridsearch
+- Logistic Regression
