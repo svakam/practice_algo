@@ -7,7 +7,7 @@ I was hoping to include CMake to help with GoogleTest integration, but I'd rathe
 Python only: Can import from external datasets to test against ML algorithms via `import data.utils.data_fetcher`. 
 
 ## Setup
-Once cloned, run `pip install -e .` to set up packages/module references. 
+Once cloned, run `pip install -e .` to set up packages/module references. Also ensure `ipykernel` is installed to run the code cell-wise. 
 
 ## Data
 ### ML Dataset Sources
@@ -35,3 +35,4 @@ print("Imported")
 - Decision Tree
 - K-nearest Neighbors
 - Random Forest, Confusion Matrix + Accuracy
+- SVM
