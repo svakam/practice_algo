@@ -124,12 +124,50 @@ def row_echelon_form(M):
         for j in range(row + 1, num_rows):
             
             # get value below pivot and reduce the row
-            value_below_pivot = M[j, row]
-            # set this row 
-            M[j] = M[j]
+            value_below_pivot = M[j, row] 
+            row_to_reduce = M[j]
+            pivot_row = M[row]
+
+            # 1) multiply pivot row by value below pivot (prepares for subtraction)
+            # 2) subtract 1) from the row to reduce -> value below pivot 
+            row_to_reduce = row_to_reduce - value_below_pivot * pivot_row
 
 def back_substitution(M):
-    return None
+    """
+    Perform back substitution on a row-echelon, augmented matrix.
+
+    Parameters:
+    - M (numpy.array): Augmented matrix in row echelon form with unitary pivots (n x n+1).
+
+    Returns:
+    - numpy.array: The solution vector of the linear system.
+    """
+
+    M = M.copy()
+    num_rows = M.shape[0]
+
+    # iterate from bottom to top
+    for row in reversed(range(num_rows)):
+        substitution_row = M[row]
+
+        # index above row to reduce (first non-zero element)
+        index = row
+
+        for j in range(row):
+            row_to_reduce = M[j]
+
+            # get value at the index above
+            value = row_to_reduce[index]
+
+            # back substitution
+            row_to_reduce = row_to_reduce - value * substitution_row
+
+            # replace updated row in matrix
+            M[j,:] = row_to_reduce
+        
+        # return last column (solutions)
+        return M[:,-1]
+
 
 def gaussian_elimination(A, b):
     """
